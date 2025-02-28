@@ -1,10 +1,15 @@
-import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Lobby from "./pages/Lobby";
+import CodeBlock from "./pages/CodeBlock";
 
 function App() {
   return (
-    <div>
-      <h1>Hello, React is working!</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Lobby />} />
+        <Route path="/codeblocks/:id" element={<CodeBlock />} />
+      </Routes>
+    </Router>
   );
 }
 

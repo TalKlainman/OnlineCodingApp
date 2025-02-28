@@ -1,0 +1,42 @@
+.lobby-container {
+    max-width: 700px; 
+    margin: 40px auto; 
+    padding: 40px; 
+    text-align: center;
+}
+
+h1 {
+    font-size: 50px; 
+    padding: 40px; 
+    font-weight: bold;
+}
+
+.code-blocks-list {
+    list-style: none;
+    padding: 0;
+}
+
+.code-block-item {
+    padding: 30px; 
+    margin: 30px 0; 
+    font-size: 28px; 
+    border: 3px solid #333; 
+    border-radius: 10px; 
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.code-block-item:hover {
+    background-color: #d9d9d9;
+    transform: scale(1.1); 
+}
+
+.codeblock-link {
+    text-decoration: none;
+    color:  #000000;
+    font-size: 30px;
+    transition: 0.3s;
+  }
+  
+
+  
