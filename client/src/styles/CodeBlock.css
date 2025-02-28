@@ -1,0 +1,145 @@
+
+
+   .code-block-container {
+    max-width: 900px;
+    margin: 10px auto;
+    padding: 40px;
+    text-align: center;
+    background-color: #ffffff;
+    position: relative;
+    top: -40px;
+}
+
+/* Page title */
+h1 {
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* User role display */
+.role-header {
+    font-size: 28px;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+/* User count */
+.user-count {
+    font-size: 24px;
+    color: #444;
+    margin-bottom: 15px;
+}
+
+/* Loading spinner container */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* Loading spinner */
+.spinner {
+    border-top-color: #3498db;
+    border-bottom-color: #3498db;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    width: 40px;
+    height: 40px;
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Code block editor container */
+.codeblock-editor {
+    background: #282c34;
+    color: white;
+    text-align: left;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 20px;
+    font-family: "Courier New", monospace;
+    overflow-y: auto;
+    width: 100%;
+    min-height: 260px;
+    height: 265px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Editable code */
+.code-editor {
+    width: 100%;
+    min-height: 260px;
+    height: 265px;
+    padding: 10px;
+    font-size: 20px;
+    font-family: "Courier New", monospace;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    margin-top: 20px;
+    outline: none;
+    transition: border 0.3s ease-in-out;
+    background: transparent;
+    color: white;
+    white-space: pre-wrap;
+}
+
+/* Smiley overlay for solution match */
+.overlay-smiley {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 300px;
+    color: green;
+    animation: fadeIn 0.8s ease-in-out;
+    z-index: 1000;
+}
+
+.overlay-smiley h1 {
+    font-size: 100px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+/* Return to Lobby button */
+.return-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #823;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin: 20px 0;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.return-button:hover {
+    background-color: #941;
+}

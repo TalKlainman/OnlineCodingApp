@@ -1,16 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/Lobby.css";
 import SERVER_URL from "../config";
 
 function Lobby() {
   const [codeBlocks, setCodeBlocks] = useState([]);
+  const navigate = useNavigate();
+  
+  const handleCodeBlockClick = (blockId) => {
+    console.log("Navigating to code block:", blockId);
+    navigate(`/codeblocks/${blockId}`);
+  };
 
   useEffect(() => {
     axios
       .get(`${SERVER_URL}/codeblocks`)
-      .then((response) => setCodeBlocks(response.data))
+      .then((response) => {
+        console.log(response.data);
+        setCodeBlocks(response.data)
+      })
       .catch((error) => console.error("Error fetching code blocks:", error));
   }, []);
 
@@ -19,9 +28,13 @@ function Lobby() {
       <h1>Choose code block</h1>
       <ul className="code-blocks-list">
         {codeBlocks.map((block) => (
-          <li key={block._id} className="code-block-item">
-            <Link to={`/codeblocks/${block._id}`} className="codeblock-link">{block.title}</Link>
-          </li>
+          <li 
+          key={block._id} 
+          className="code-block-item"
+          onClick={() =>  handleCodeBlockClick(block._id)}
+        >
+          {block.title}
+        </li>
         ))}
       </ul>
     </div>

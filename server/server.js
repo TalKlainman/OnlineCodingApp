@@ -26,7 +26,17 @@ const rooms = new Map();
 io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);
 
+  console.log("Current rooms:");
+  for (const [roomId, mentorId] of rooms.entries()) {
+    console.log(`Room ${roomId}: Mentor ${mentorId}`);
+  }
+
   socket.on("joinRoom", ({ roomId }) => {
+    // if (socket.currentRoom === roomId) {
+    //   return;
+    // }
+    console.log(`User ${socket.id} joining room ${roomId}`);
+    console.log(`Current room mentor: ${rooms.get(roomId) || "none"}`);
     // If the user was in a different room before, leave it
     if (socket.currentRoom) {
       socket.leave(socket.currentRoom);
@@ -51,7 +61,7 @@ io.on("connection", (socket) => {
   socket.on("codeChange", ({ roomId, code, matches }) => {
     // Send both the code and solution match status
     socket.to(roomId).emit("updateCode", code);
-    socket.to(roomId).emit("solutionMatch", matches);
+    io.to(roomId).emit("solutionMatch", matches);
   });
 
   // Handle user disconnection
@@ -59,6 +69,10 @@ io.on("connection", (socket) => {
     if (socket.currentRoom) {
       handleLeave(socket, socket.currentRoom);
     }
+  });
+
+  socket.on("leaveRoom", (roomId) => {
+    handleLeave(socket, roomId);
   });
 
   // Function to handle user leaving a room
