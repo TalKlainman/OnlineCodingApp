@@ -6,8 +6,12 @@
     "eject": "react-scripts eject"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.3",
+    "@uiw/codemirror-theme-dracula": "^4.23.9",
+    "@uiw/react-codemirror": "^4.23.9",
     "axios": "^1.8.1",
     "highlight.js": "^11.11.1",
+    "prismjs": "^1.29.0",
     "react-router-dom": "^7.2.0",
     "react-scripts": "^5.0.1",
     "socket.io-client": "^4.8.1"

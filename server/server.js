@@ -32,9 +32,6 @@ io.on("connection", (socket) => {
   }
 
   socket.on("joinRoom", ({ roomId }) => {
-    // if (socket.currentRoom === roomId) {
-    //   return;
-    // }
     console.log(`User ${socket.id} joining room ${roomId}`);
     console.log(`Current room mentor: ${rooms.get(roomId) || "none"}`);
     // If the user was in a different room before, leave it
