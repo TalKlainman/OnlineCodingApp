@@ -83,6 +83,21 @@ io.on("connection", (socket) => {
     io.to(roomId).emit("solutionMatch", matches);
   });
 
+  // Handle mentor sending hints to students
+  socket.on("sendHint", ({ roomId, hint }) => {
+    console.log(`Mentor ${socket.id} sending hint to room ${roomId}`);
+
+    // Check if the sender is the mentor
+    if (rooms.get(roomId) === socket.id) {
+      // Only broadcast to students (everyone in room except the mentor)
+      socket.to(roomId).emit("showHint", hint);
+    } else {
+      console.log(
+        `Unauthorized hint broadcast attempt from non-mentor: ${socket.id}`
+      );
+    }
+  });
+
   // Handle user disconnection
   socket.on("disconnect", () => {
     if (socket.currentRoom) {

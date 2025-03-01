@@ -20,6 +20,8 @@ function CodeBlock() {
   const [matchesSolution, setMatchesSolution] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userCount, setUserCount] = useState(0);
+  const [hint, setHint] = useState(""); // Store the hint content
+  const [showHint, setShowHint] = useState(false); // Control hint visibility
 
   // Load data and setup sockets
   useEffect(() => {
@@ -49,6 +51,13 @@ function CodeBlock() {
       }
     });
 
+     // Listen for hint broadcasts from the mentor
+     socket.on("showHint", (hintText) => {
+      setHint(hintText);
+      setShowHint(true);
+    });
+
+
     socket.on("solutionMatch", (matches) => setMatchesSolution(matches));
     socket.on("userCount", (count) => setUserCount(count));
     socket.on("mentorLeft", () => navigate("/"));
@@ -64,6 +73,7 @@ function CodeBlock() {
         setCode((prevCode) => prevCode || response.data.code);
         setSolution(response.data.solution);
         setTitle(response.data.title);
+        setHint(response.data.hint || "No hint available for this challenge.");
         setLoading(false);
       })
       .catch((error) => {
@@ -77,6 +87,7 @@ function CodeBlock() {
       socket.off("solutionMatch");
       socket.off("userCount");
       socket.off("mentorLeft");
+      socket.off("showHint");
       socket.emit("leaveRoom", id);
       socket.off("initialState");
       socket.currentRoom = null;
@@ -90,6 +101,11 @@ function CodeBlock() {
     const matches = newCode.trim() === solution.trim();
     socket.emit("codeChange", { roomId: id, code: newCode, matches });
   };
+
+    // Mentor function to send hint to all students
+    const sendHintToStudents = () => {
+      socket.emit("sendHint", { roomId: id, hint });
+    };
 
   return (
     <div className="code-block-container">
@@ -105,6 +121,25 @@ function CodeBlock() {
             {isMentor ? "Mentor (Read-only)" : "Student (Editable)"}
           </h2>
 
+          {isMentor && (
+            <div className="mentor-controls">
+              <button onClick={sendHintToStudents} className="send-hint-button">
+                Send Hint to Students
+              </button>
+            </div>
+          )}
+
+          {!isMentor && showHint && (
+            <div className="hint-container">
+              <div className="hint-box">
+                <div className="hint-header">
+                  <h3>Hint</h3>
+                </div>
+                <p>{hint}</p>
+              </div>
+            </div>
+          )}
+          
           <div className="codeblock-editor">
             <CodeMirror
               className="code-editor"
