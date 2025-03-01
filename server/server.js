@@ -22,6 +22,7 @@ app.use(express.json());
 app.use("/codeblocks", codeBlockRoutes);
 
 const rooms = new Map();
+const roomStates = new Map();
 
 io.on("connection", (socket) => {
   console.log(`User connected: ${socket.id}`);
@@ -43,6 +44,11 @@ io.on("connection", (socket) => {
     socket.currentRoom = roomId;
     socket.join(roomId);
 
+    // If room exists but doesn't have state yet, initialize it
+    if (!roomStates.has(roomId)) {
+      roomStates.set(roomId, { code: null, matches: false });
+    }
+
     // If the room does not exist, assign the first user as the mentor
     if (!rooms.has(roomId)) {
       rooms.set(roomId, socket.id);
@@ -51,11 +57,24 @@ io.on("connection", (socket) => {
       socket.emit("setMentor", false); // Notify the user they are a student
     }
 
+      // If we have stored state for this room, send it immediately
+      const roomState = roomStates.get(roomId);
+      if (roomState && roomState.code) {
+        console.log(`Sending stored code to user ${socket.id} in room ${roomId}`);
+        // Use a slight delay to ensure socket.join has completed
+        setTimeout(() => {
+          socket.emit("initialState", roomState);
+        }, 100);
+      }
+
     updateUserCount(roomId);
   });
 
   // Handle code changes and broadcast to others in the room
   socket.on("codeChange", ({ roomId, code, matches }) => {
+     // Store the current state
+     console.log(`Storing new code state for room ${roomId}`, { codeLength: code.length, matches });
+     roomStates.set(roomId, { code, matches });
     // Send both the code and solution match status
     socket.to(roomId).emit("updateCode", code);
     io.to(roomId).emit("solutionMatch", matches);
@@ -78,6 +97,7 @@ io.on("connection", (socket) => {
     if (rooms.get(roomId) === socket.id) {
       io.to(roomId).emit("mentorLeft"); // Notify students
       rooms.delete(roomId); // Delete room
+      roomStates.delete(roomId);
     }
 
     socket.leave(roomId); // Remove user from room
