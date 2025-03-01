@@ -1,8 +1,10 @@
 .lobby-container {
     max-width: 700px; 
-    margin: 40px auto; 
+    margin: 10px auto; 
     padding: 40px; 
     text-align: center;
+    position: relative;
+    top: -30px;
 }
 
 h1 {
@@ -30,13 +32,6 @@ h1 {
     background-color: #d9d9d9;
     transform: scale(1.1); 
 }
-
-/* .codeblock-link {
-    text-decoration: none;
-    color:  #000000;
-    font-size: 30px;
-    transition: 0.3s;
-  } */
   
 
   

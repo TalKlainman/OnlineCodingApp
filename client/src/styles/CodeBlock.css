@@ -7,7 +7,7 @@
     text-align: center;
     background-color: #ffffff;
     position: relative;
-    top: -40px;
+    top: -30px;
 }
 
 /* Page title */
@@ -30,37 +30,6 @@ h1 {
     font-size: 24px;
     color: #444;
     margin-bottom: 15px;
-}
-
-/* Loading spinner container */
-.spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-}
-
-/* Loading spinner */
-.spinner {
-    border-top-color: #3498db;
-    border-bottom-color: #3498db;
-    border-left-color: transparent;
-    border-right-color: transparent;
-    width: 40px;
-    height: 40px;
-    border-width: 4px;
-    border-style: solid;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
 }
 
 /* Code block editor container */
@@ -110,7 +79,7 @@ h1 {
 }
 
 .overlay-smiley h1 {
-    font-size: 100px !important; 
+    font-size: 90px !important; 
     margin: 0; 
     padding: 0;
     line-height: 1; 

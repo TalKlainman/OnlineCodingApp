@@ -1,0 +1,39 @@
+/* Loading spinner container */
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Loading spinner */
+.spinner {
+    border-top-color: #3498db;
+    border-bottom-color: #3498db;
+    border-left-color: transparent;
+    border-right-color: transparent;
+    width: 40px;
+    height: 40px;
+    border-width: 4px;
+    border-style: solid;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; 
+}

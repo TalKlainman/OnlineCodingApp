@@ -5,6 +5,7 @@ import axios from "axios";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import "../styles/CodeBlock.css";
+import "../styles/App.css";
 import SERVER_URL from "../config";
 
 function CodeBlock() {

@@ -25,6 +25,7 @@ const codeBlocks = [
     }
     
     console.log(sum(2, 3));`,
+    hint: "Think about how you can combine two numbers into a single result.",
   },
   {
     title: "Convert String to Uppercase",
@@ -38,6 +39,7 @@ const codeBlocks = [
     }
     
     console.log(toUpperCase('hello'));`,
+    hint: "JavaScript provides a built-in method to modify the case of a string.",
   },
   {
     title: "Check Even or Odd",
@@ -51,6 +53,7 @@ const codeBlocks = [
     }
     
     console.log(isEven(7));`,
+    hint: "Numbers that are evenly divisible by 2 belong to one category, while others belong to another.",
   },
   {
     title: "Loop Through Array",
@@ -68,6 +71,7 @@ const codeBlocks = [
     }
     
     loopArray([10, 20, 30, 40]);`,
+    hint: "Each item in the array has an index. Try accessing items one by one.",
   },
 ];
 
