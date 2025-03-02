@@ -5,7 +5,7 @@ import axios from "axios";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import "../styles/CodeBlock.css";
-import "../styles/GetHint.css";
+import Hints from "../components/Hint";
 import "../styles/App.css";
 import SERVER_URL from "../config";
 
@@ -21,35 +21,24 @@ function CodeBlock() {
   const [matchesSolution, setMatchesSolution] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userCount, setUserCount] = useState(0);
-  const [hint, setHint] = useState(""); // Store the hint content
-  const [showHint, setShowHint] = useState(false); // Control hint visibility
+  const [hint, setHint] = useState("");
 
   // Load data and setup sockets
   useEffect(() => {
-    socket.on("setMentor", (mentorStatus) => {
-      setIsMentor(mentorStatus);
-    });
-
     // Regular code updates from other users
-    socket.on("updateCode", (newCode) => {
-      setCode(newCode);
-    });
-
-    // Initial state when joining a room
-    socket.on("initialState", (state) => {
-      setCode(state.code);
-      setMatchesSolution(state.matches);
-    });
-
-    // Listen for hint broadcasts from the mentor
-    socket.on("showHint", (hintText) => {
-      setHint(hintText);
-      setShowHint(true);
-    });
-
+    socket.on("updateCode", (newCode) => setCode(newCode));
+    socket.on("setMentor", (mentorStatus) => setIsMentor(mentorStatus));
     socket.on("solutionMatch", (matches) => setMatchesSolution(matches));
     socket.on("userCount", (count) => setUserCount(count));
     socket.on("mentorLeft", () => navigate("/"));
+
+    // Initial state when joining a room
+    socket.on("initialState", (state) => {
+      if (state && state.code) {
+        setCode(state.code);
+        setMatchesSolution(state.matches);
+      }
+    });
 
     socket.emit("joinRoom", { roomId: id });
 
@@ -76,7 +65,6 @@ function CodeBlock() {
       socket.off("solutionMatch");
       socket.off("userCount");
       socket.off("mentorLeft");
-      socket.off("showHint");
       socket.emit("leaveRoom", id);
       socket.off("initialState");
       socket.currentRoom = null;
@@ -89,11 +77,6 @@ function CodeBlock() {
     setCode(newCode);
     const matches = newCode.trim() === solution.trim();
     socket.emit("codeChange", { roomId: id, code: newCode, matches });
-  };
-
-  // Mentor function to send hint to all students
-  const sendHintToStudents = () => {
-    socket.emit("sendHint", { roomId: id, hint });
   };
 
   return (
@@ -109,23 +92,7 @@ function CodeBlock() {
           <h2 className="role-header">
             {isMentor ? "Mentor (Read-only)" : "Student (Editable)"}
           </h2>
-
-          {isMentor && (
-            <div className="flex-center">
-              <button onClick={sendHintToStudents} className="send-hint-button">
-                Send Hint to Students
-              </button>
-            </div>
-          )}
-
-          {!isMentor && showHint && (
-            <div className="flex-center">
-              <div className="hint-box">
-                <p>Hint : {hint}</p>
-              </div>
-            </div>
-          )}
-
+          <Hints roomId={id} isMentor={isMentor} initialHint={hint} />
           <div className="codeblock-editor">
             <CodeMirror
               className="code-editor"
