@@ -1,6 +1,6 @@
 /**
  * Server setup and WebSocket handling for a real-time collaborative coding environment.
- * 
+ *
  * @module Server
  */
 
@@ -104,7 +104,7 @@ io.on("connection", (socket) => {
   function handleLeave(socket, roomId) {
     // If the mentor leaves, notify students and remove the room
     if (rooms.get(roomId) === socket.id) {
-      io.to(roomId).emit("mentorLeft");
+      socket.to(roomId).emit("mentorLeft");
       rooms.delete(roomId);
       roomStates.delete(roomId);
     }
