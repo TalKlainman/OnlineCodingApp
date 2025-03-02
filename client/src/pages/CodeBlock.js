@@ -1,3 +1,9 @@
+/**
+ * CodeBlock component for solving coding challenges.
+ * Fetches challenge data, synchronizes code edits via WebSockets,
+ * and provides real-time collaboration features.
+ */
+
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import socket from "../socket";
@@ -23,16 +29,15 @@ function CodeBlock() {
   const [userCount, setUserCount] = useState(0);
   const [hint, setHint] = useState("");
 
-  // Load data and setup sockets
   useEffect(() => {
-    // Regular code updates from other users
+    // Listen for updates from other users
     socket.on("updateCode", (newCode) => setCode(newCode));
     socket.on("setMentor", (mentorStatus) => setIsMentor(mentorStatus));
     socket.on("solutionMatch", (matches) => setMatchesSolution(matches));
     socket.on("userCount", (count) => setUserCount(count));
     socket.on("mentorLeft", () => navigate("/"));
 
-    // Initial state when joining a room
+    // Load initial state when joining a room
     socket.on("initialState", (state) => {
       if (state && state.code) {
         setCode(state.code);
@@ -42,12 +47,10 @@ function CodeBlock() {
 
     socket.emit("joinRoom", { roomId: id });
 
-    // Then fetch data from the database
+    // Fetch challenge data from the server
     axios
       .get(`${SERVER_URL}/codeblocks/${id}`)
       .then((response) => {
-        // Only set code from database if we haven't received it from socket yet
-        // This way the server state takes precedence
         setCode((prevCode) => prevCode || response.data.code);
         setSolution(response.data.solution);
         setTitle(response.data.title);
@@ -60,6 +63,7 @@ function CodeBlock() {
       });
 
     return () => {
+      // Remove event listeners when leaving the page
       socket.off("setMentor");
       socket.off("updateCode");
       socket.off("solutionMatch");
@@ -71,6 +75,7 @@ function CodeBlock() {
     };
   }, [id, navigate]);
 
+  // Updates code in real-time and syncs changes with the server.
   const handleChange = (newCode) => {
     if (isMentor) return;
 

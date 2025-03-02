@@ -1,3 +1,8 @@
+/**
+ * Hints component for displaying and sending hints.
+ * Mentors can send hints to students.
+ */
+
 import "../styles/Hint.css";
 import { useEffect, useState } from "react";
 import socket from "../socket";
@@ -16,11 +21,12 @@ function Hints({ roomId, isMentor, initialHint }) {
     });
 
     return () => {
+      // Remove hint listener when leaving the page
       socket.off("showHint");
     };
   }, []);
 
-  // Function to send hints to students
+  // Sends the hint to all students in the room
   const sendHintToStudents = () => {
     socket.emit("sendHint", { roomId, hint });
   };

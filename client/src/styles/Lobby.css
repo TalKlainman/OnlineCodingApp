@@ -1,3 +1,9 @@
+/*
+ * Styles for the Lobby component.
+ * Includes layout, title styling, and interactive elements.
+ */
+
+ /* Container for the lobby page */
 .lobby-container {
     max-width: 700px; 
     margin: 10px auto; 
@@ -7,17 +13,20 @@
     top: -30px;
 }
 
+/* Page title */
 h1 {
     font-size: 50px; 
     padding: 40px; 
     font-weight: bold;
 }
 
+/* List of code blocks */
 .code-blocks-list {
     list-style: none;
     padding: 0;
 }
 
+/* Individual code block item */
 .code-block-item {
     padding: 30px; 
     margin: 30px 0; 

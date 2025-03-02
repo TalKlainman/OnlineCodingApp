@@ -1,3 +1,8 @@
+/**
+ * Lobby component for selecting a code block.
+ * Fetches code blocks from the server and navigates to selected ones.
+ */
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -10,16 +15,16 @@ function Lobby() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  // Navigate to the selected code block by its ID.
   const handleCodeBlockClick = (blockId) => {
-    console.log("Navigating to code block:", blockId);
     navigate(`/codeblocks/${blockId}`);
   };
 
+  // Load code blocks from the server.
   useEffect(() => {
     axios
       .get(`${SERVER_URL}/codeblocks`)
       .then((response) => {
-        console.log(response.data);
         setCodeBlocks(response.data);
         setLoading(false);
       })

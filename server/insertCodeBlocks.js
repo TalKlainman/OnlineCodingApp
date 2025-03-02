@@ -1,11 +1,18 @@
+/**
+ * Script to insert predefined code blocks into MongoDB.
+ * 
+ * @module InsertCodeBlocks
+ */
+
 require("dotenv").config();
 const mongoose = require("mongoose");
 const CodeBlock = require("./models/CodeBlock");
 
+
+// Connect to MongoDB and insert predefined code blocks.
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("MongoDB Connected Successfully");
     insertData();
   })
   .catch((err) => {
@@ -77,9 +84,8 @@ const codeBlocks = [
 
 async function insertData() {
   try {
-    await CodeBlock.deleteMany({});
+    await CodeBlock.deleteMany({}); // Clear existing data
     await CodeBlock.insertMany(codeBlocks);
-    console.log("Code blocks inserted successfully!");
     mongoose.connection.close();
   } catch (error) {
     console.error("Error inserting code blocks:", error);

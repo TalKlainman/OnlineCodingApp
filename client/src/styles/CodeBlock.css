@@ -1,5 +1,9 @@
+/*
+ * Styles for the CodeBlock component.
+ * Includes layout, editor styling, user role display, and animations.
+ */
 
-
+ /* Container for the entire code block page */
    .code-block-container {
     max-width: 900px;
     margin: 10px auto;
@@ -25,7 +29,7 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* User count */
+/* User count display */
 .user-count {
     font-size: 24px;
     color: #444;
@@ -51,7 +55,7 @@ h1 {
     justify-content: center;
 }
 
-/* Editable code */
+/* Code editor styling */
 .code-editor {
     width: 100%;
     min-height: 260px;
@@ -69,6 +73,7 @@ h1 {
     white-space: pre-wrap;
 }
 
+/* Smiley overlay animation when solution matches */
 .overlay-smiley {
     position: relative;
     text-align: center;
@@ -85,6 +90,7 @@ h1 {
     line-height: 1; 
 }
 
+/* Fade-in animation */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -96,7 +102,7 @@ h1 {
     }
 }
 
-/* Return to Lobby button */
+/* Return to Lobby button styling */
 .return-button {
     padding: 10px 20px;
     font-size: 16px;
@@ -113,6 +119,7 @@ h1 {
     background-color: #941;
 }
 
+/* CodeMirror editor adjustments */
 .code-editor .cm-editor {
     height: auto !important;
     min-height: 260px;

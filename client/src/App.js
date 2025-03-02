@@ -1,3 +1,8 @@
+/**
+ * Main application component.
+ * Handles routing between different pages using React Router.
+ */
+
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Lobby from "./pages/Lobby";
 import CodeBlock from "./pages/CodeBlock";
@@ -14,4 +19,3 @@ function App() {
 }
 
 export default App;
-
