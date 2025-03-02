@@ -5,6 +5,7 @@ import axios from "axios";
 import CodeMirror from "@uiw/react-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import "../styles/CodeBlock.css";
+import "../styles/GetHint.css";
 import "../styles/App.css";
 import SERVER_URL from "../config";
 
@@ -27,36 +28,24 @@ function CodeBlock() {
   useEffect(() => {
     socket.on("setMentor", (mentorStatus) => {
       setIsMentor(mentorStatus);
-      console.log(`Assigned role: ${mentorStatus ? "Mentor" : "Student"}`);
     });
 
     // Regular code updates from other users
     socket.on("updateCode", (newCode) => {
-      console.log("Received new code:", newCode);
       setCode(newCode);
     });
 
     // Initial state when joining a room
     socket.on("initialState", (state) => {
-      console.log("Received initial state:", state);
-      if (state && state.code) {
-        console.log(
-          "Setting code from initial state, length:",
-          state.code.length
-        );
-        setCode(state.code);
-        setMatchesSolution(state.matches);
-      } else {
-        console.log("Received empty initial state");
-      }
+      setCode(state.code);
+      setMatchesSolution(state.matches);
     });
 
-     // Listen for hint broadcasts from the mentor
-     socket.on("showHint", (hintText) => {
+    // Listen for hint broadcasts from the mentor
+    socket.on("showHint", (hintText) => {
       setHint(hintText);
       setShowHint(true);
     });
-
 
     socket.on("solutionMatch", (matches) => setMatchesSolution(matches));
     socket.on("userCount", (count) => setUserCount(count));
@@ -102,10 +91,10 @@ function CodeBlock() {
     socket.emit("codeChange", { roomId: id, code: newCode, matches });
   };
 
-    // Mentor function to send hint to all students
-    const sendHintToStudents = () => {
-      socket.emit("sendHint", { roomId: id, hint });
-    };
+  // Mentor function to send hint to all students
+  const sendHintToStudents = () => {
+    socket.emit("sendHint", { roomId: id, hint });
+  };
 
   return (
     <div className="code-block-container">
@@ -122,7 +111,7 @@ function CodeBlock() {
           </h2>
 
           {isMentor && (
-            <div className="mentor-controls">
+            <div className="flex-center">
               <button onClick={sendHintToStudents} className="send-hint-button">
                 Send Hint to Students
               </button>
@@ -130,16 +119,13 @@ function CodeBlock() {
           )}
 
           {!isMentor && showHint && (
-            <div className="hint-container">
+            <div className="flex-center">
               <div className="hint-box">
-                <div className="hint-header">
-                  <h3>Hint</h3>
-                </div>
-                <p>{hint}</p>
+                <p>Hint : {hint}</p>
               </div>
             </div>
           )}
-          
+
           <div className="codeblock-editor">
             <CodeMirror
               className="code-editor"
