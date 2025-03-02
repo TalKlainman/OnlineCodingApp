@@ -6,17 +6,17 @@ Mentors can send hints, and all changes are synchronized instantly across partic
 
 ##Features
 
-Live code updates – Changes made by any participant are synchronized across all users in the session.
-Hints system – The mentor can send hints in real-time, which instantly appear on the student's screen to assist in problem-solving.
-Real-time collaboration – Users can work on the same code simultaneously using WebSocket (Socket.IO).
-Code correctness validation – The system checks if the student's solution matches the expected output.
-User presence tracking – Displays the number of active participants in each coding session.
+– Changes made by any participant are synchronized across all users in the session.
+– The mentor can send hints in real-time, which instantly appear on the student's screen to assist.
+– Users can work on the same code simultaneously using WebSocket (Socket.IO).
+– The system checks if the student's solution matches the expected output.
+– Displays the number of active participants in each coding session.
 
 ###Tech Stack
 
-Frontend - React , CodeMirror (Code editor for syntax highlighting)
-Backend - Node.js & Express (Server-side logic and API handling), MongoDB & Mongoose (Database and schema management)
-Real-time Communication - Socket.IO (WebSockets for live updates)
+Frontend - React , CodeMirror 
+Backend - Node.js ,Express , MongoDB 
+Real-time Communication - Socket.IO 
 
 ####Deployment
 
